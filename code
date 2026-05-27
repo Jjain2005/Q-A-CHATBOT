@@ -14,3 +14,14 @@ from langchain_core.messages import HumanMessage
 model.invoke([HumanMessage(content="hi, my name is jinam and i will become gen ai engineer")])
 
 
+#list of messages -->> able to remember the conversation/chat history here
+from langchain_core.messages import AIMessage
+model.invoke(
+    [
+        HumanMessage(content="hi, my name is jinam and i will become gen ai engineer"),
+        AIMessage(content="Nice to meet you, Jinam. That's exciting to hear that you're pursuing a career as a Generative AI Engineer. It's a rapidly growing field with immense potential for innovation and impact.\n\nAs a Gen AI Engineer, you'll be working with advanced AI models that can generate human-like text, images, and other content. This field is still in its early stages, and there's a lot to learn and explore.\n\nWhat specific areas of Generative AI are you interested in? Are you drawn to natural language processing, computer vision, or perhaps generative models like GANs or VAEs?"),
+        HumanMessage(content="hey what is my name and what i want to become?")
+
+    ]
+)
+
