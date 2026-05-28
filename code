@@ -40,3 +40,8 @@ with_message_history=RunnableWithMessageHistory(model,get_session_history)
 
 
 config={"configurable":{"session_id":"chat1"}}
+
+response=with_message_history.invoke(
+    [HumanMessage(content="hi, my name is jinam and i will become gen ai engineer")],
+    config=config
+)
