@@ -37,3 +37,6 @@ def get_session_history(session_id:str)->BaseChatMessageHistory:
 
 
 with_message_history=RunnableWithMessageHistory(model,get_session_history)
+
+
+config={"configurable":{"session_id":"chat1"}}
