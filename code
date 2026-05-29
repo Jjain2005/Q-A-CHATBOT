@@ -1,47 +1,19 @@
-import os 
+import streamlit as st
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
-load_dotenv()
-  
-GROQ_API_KEY=os.getenv("GROQ_API_KEY")
-model=ChatGroq(
-    groq_api_key=GROQ_API_KEY,
-    model_name="llama-3.1-8b-instant"
-)
-print(GROQ_API_KEY)
 
-from langchain_core.messages import HumanMessage
-model.invoke([HumanMessage(content="hi, my name is jinam and i will become gen ai engineer")])
-
-
-#list of messages -->> able to remember the conversation/chat history here
-from langchain_core.messages import AIMessage
-model.invoke(
-    [
-        HumanMessage(content="hi, my name is jinam and i will become gen ai engineer"),
-        AIMessage(content="Nice to meet you, Jinam. That's exciting to hear that you're pursuing a career as a Generative AI Engineer. It's a rapidly growing field with immense potential for innovation and impact.\n\nAs a Gen AI Engineer, you'll be working with advanced AI models that can generate human-like text, images, and other content. This field is still in its early stages, and there's a lot to learn and explore.\n\nWhat specific areas of Generative AI are you interested in? Are you drawn to natural language processing, computer vision, or perhaps generative models like GANs or VAEs?"),
-        HumanMessage(content="hey what is my name and what i want to become?")
-
-    ]
+from langchain.chains import (
+    create_history_aware_retriever,
+    create_retrieval_chain,
 )
 
-from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain.chains.combine_documents import (
+    create_stuff_documents_chain,
+)
+
+from langchain_chroma import Chroma
+
 from langchain_core.chat_history import BaseChatMessageHistory
-from langchain_core.runnables.history import RunnableWithMessageHistory
 
-store={}
-def get_session_history(session_id:str)->BaseChatMessageHistory:
-    if session_id not in store:
-        store[session_id]=ChatMessageHistory()
-    return store[session_id]
-
-
-with_message_history=RunnableWithMessageHistory(model,get_session_history)
-
-
-config={"configurable":{"session_id":"chat1"}}
-
-response=with_message_history.invoke(
-    [HumanMessage(content="hi, my name is jinam and i will become gen ai engineer")],
-    config=config
+from langchain_community.chat_message_histories import (
+    ChatMessageHistory,
 )
